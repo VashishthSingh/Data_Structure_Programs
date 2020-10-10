@@ -66,7 +66,7 @@ void deQueue(struct queue *Q){
 			Q->front=-1;
 			Q->rear=-1;
 			printf("\nNow Queue Is Empty, Because Only One Ele. Was In THe Q.");
-		}
+		} 
 		else{
 			Q->front=((Q->front)+1)%(Q->capacity);
 			printf("\ndeQueued, Queue Is Not Empty.");
