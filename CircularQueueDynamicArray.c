@@ -32,33 +32,76 @@ int queueSize(struct queue *Q){
 	if(Q->front==-1 && Q->rear==-1)
 		return(0);
 	else{
+		if(isQueueFull(Q))
+			return(Q->capacity);
 		return(((Q->capacity)-(Q->front)+(Q->rear)+1)%(Q->capacity));
 	}
 }
 void showQueueElements(struct queue *Q){
-	printf("\n Complete It On Your Own.");
+	if(isQueueEmpty(Q)){
+		printf("\nQueue Is Empty");
+	}
+	else{
+		int index=Q->front;
+		int size=queueSize(Q);
+		for(;size--;){
+			printf("%d ",Q->arr[index]);
+			index=(index+1)%(Q->capacity);
+		}
+	}
 }
 void showQueueStatus(struct queue *Q){
-	printf("\nFront = %d, Rear = %d",Q->front,Q->rear);
+	printf("\nFront = %d, Rear = %d, Queue Cap = %d",Q->front,Q->rear,Q->capacity);
+}
+void doubleQueueCapacity(struct queue *Q){
+	int size=queueSize(Q),i;
+	int *temp=(int*)malloc(sizeof(int)*((Q->capacity)*2));
+	int index=Q->front;
+	for(i=0;size--;i++){
+		temp[i]=Q->arr[index];
+		index=(index+1)%(Q->capacity);
+	}
+	free(Q->arr);
+	Q->capacity=(Q->capacity)*2;
+	Q->arr=temp;
+	Q->front=0;
+	Q->rear=i-1;
+}
+void halfQueueCapacity(struct queue *Q){
+	int size=queueSize(Q),i;
+	if(Q->capacity>5 && size==(Q->capacity)/2){
+		int *temp=(int*)malloc(sizeof(int)*((Q->capacity)/2));
+		int index=Q->front;
+		for(i=0;size--;i++){
+			temp[i]=Q->arr[index];
+			index=(index+1)%(Q->capacity);
+		}
+		free(Q->arr);
+		Q->capacity=(Q->capacity)/2;
+		Q->arr=temp;
+		Q->front=0;
+		Q->rear=i-1;
+	}
 }
 void enqueue(struct queue *Q){
 	if(isQueueFull(Q)){
-		printf("\nOverflow Condition, Enqueue Is Not Possible.");
+		doubleQueueCapacity(Q);
+		showQueueStatus(Q);
 	}
-	else{
-		int val;
-		printf("\nEnter The Element: ");
-		scanf("%d",&val);
-		Q->rear=(Q->rear+1)%(Q->capacity);
-		if(Q->front==-1)
-			Q->front++;
-		Q->arr[Q->rear]=val;
-		printf("\nEnqueued");
-	}
+	int val;
+	printf("\nEnter The Element: ");
+	scanf("%d",&val);
+	Q->rear=(Q->rear+1)%(Q->capacity);
+	if(Q->front==-1)
+		Q->front++;
+	Q->arr[Q->rear]=val;
+	printf("\nEnqueued");
+	
 }
 void deQueue(struct queue *Q){
 	if(isQueueEmpty(Q)){
 		printf("\nUnderflow Condition, deQueue Is Not Possible");
+		showQueueStatus(Q);
 	}
 	else{
 		int val=Q->arr[Q->front]; // val=7
@@ -70,8 +113,10 @@ void deQueue(struct queue *Q){
 		else{
 			Q->front=((Q->front)+1)%(Q->capacity);
 			printf("\ndeQueued, Queue Is Not Empty.");
+			halfQueueCapacity(Q);
 		}
 		printf("\ndeQueued Value = %d",val);
+		showQueueStatus(Q);
 	}
 }
 int queueMenu(){
@@ -139,6 +184,7 @@ int main(){
 		if(exitInfiniteLoop12==1)
 			break;
 	}//end of infinite loop
+	getch();
 	return(0);
 }//end of main
 
