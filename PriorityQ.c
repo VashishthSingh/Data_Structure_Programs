@@ -30,6 +30,7 @@ void deleteNode(struct node **pQ){
 			printf("\nDelete Node Is: %d %d",(*pQ)->data,(*pQ)->priority);
 			(*pQ)=(*pQ)->next;  
 			free((*pQ)->prev);
+                        (*pQ)->prev=NULL;
 		}
 	}
 }
