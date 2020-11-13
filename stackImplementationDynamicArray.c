@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<conio.h>
 
-struct Stack{
+struct Stack{  
 	int top;
 	int capacity;
 	int *arr;
