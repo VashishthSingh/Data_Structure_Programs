@@ -8,7 +8,7 @@ struct Stack{
 	int *arr;
 };
 struct Stack* createStack(int cap){
-	struct Stack *stack=(struct Stack*)malloc(sizeof(struct Stack));
+	struct Stack *stack=(struct Stack*)malloc(sizeof(struct Stack));  
 	stack->top=-1;
 	stack->capacity=cap;
 	stack->arr=(int*)malloc(sizeof(int)*stack->capacity);
