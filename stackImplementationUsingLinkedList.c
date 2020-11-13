@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include<conio.h>
 
-struct NOde{   // node, Node, NOde
+struct NOde{   // node, Node, NOde  
 	int data;
 	struct NOde *next;
 };
